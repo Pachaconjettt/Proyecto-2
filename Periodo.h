@@ -8,16 +8,16 @@ using namespace std;
 
 class Periodo {
 protected:
-	string periodo;
-	int cantidad_cursos;
-	Grupo** lista_cursos;
+	/*string periodo;
+	int cantidad_cursos;*/
+	/*Grupo** lista_cursos; Solamente a esto */
 
-	void inicializar_listaCursos() {
-		lista_cursos = new Grupo * [NUM_CURSOS];
+	//void inicializar_listaCursos() {
+	//	lista_cursos = new Grupo * [NUM_CURSOS];
 
-		for (int i = 0; i < NUM_CURSOS; i++) {
-			lista_cursos[i] = nullptr;
-		}
+	//	for (int i = 0; i < NUM_CURSOS; i++) {
+	//		lista_cursos[i] = nullptr;
+	//	}
 	}
 public:
 	Periodo(string);

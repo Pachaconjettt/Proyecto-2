@@ -1,10 +1,17 @@
 #pragma once
 #include <iostream>
+#include "Periodo.h"
+#include "Lista_Estudiante.h"
+#include "Lista_Profesores.h"
 //#include "Profesor.h"
 //#include "Estudiante.h"
 using namespace std;
 
 class Interfaz {
+private:
+	Periodo* periodo; 
+	Lista_Estudiante* estudiantes; // Lo más importanteee
+	Lista_Profesores* profes; 
 public:
 	Interfaz();
 

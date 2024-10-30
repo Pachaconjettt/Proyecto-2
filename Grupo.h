@@ -1,6 +1,7 @@
 #pragma once
 #include "Horario.h"
 #include "Lista_Estudiante.h"
+#include "Profesor.h"
 //#define CUPOS 30
 
 //class Profesor;
@@ -13,6 +14,7 @@ private:
 	int cantidad_estudiantes;
 	int cupoMaximo;
 	Horario* horario;
+	Profesor* profesor;
 	Lista_Estudiante* listaStudents;
 	//Profesor* profesor//
 	/* Voy a quitar esto por que "Tener

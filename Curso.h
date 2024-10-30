@@ -2,7 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "Grupo.h"
+#include "Lista_Grupos.h"
+#include  "Lista_Profesores.h"
 using namespace std;
 
 class Curso {
@@ -12,7 +13,8 @@ private:
 	int horas;
 	int precio;
 	bool estado;
-	Grupo* group;
+	Lista_Profesores* profes;
+	Lista_Grupos* grupos; 
 	
 public:
 	Curso();
