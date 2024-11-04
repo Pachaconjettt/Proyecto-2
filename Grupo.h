@@ -40,6 +40,7 @@ public:
 	int get_numGrupo();
 	int get_cuposMaximos();
 	int get_cantidadEstudiantes();
+	Horario* getHorario(); 
 	string toString();
 	Lista_Estudiante* getGrupoLista(); 
 	Estudiante* getEstudiante(string id); 

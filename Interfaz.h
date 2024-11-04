@@ -12,12 +12,14 @@ private:
 	Periodo* periodo; 
 	Lista_Estudiante* estudiantes; // Lo más importanteee
 	Lista_Profesores* profes; 
+	Lista_Cursos* cursoos; 
+	Lista_Grupos* groups; 
 public:
 	Interfaz();
 
 	void menu_principal();
 
-	void submenu_administarcion();
+	void submenu_administracion();
 	void ingresar_profesor();
 	void ingresar_estudiante();
 	void ingresar_Periodo();

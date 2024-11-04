@@ -132,6 +132,7 @@
     <ClCompile Include="Grupo.cpp" />
     <ClCompile Include="Horario.cpp" />
     <ClCompile Include="Interfaz.cpp" />
+    <ClCompile Include="Lista_Cursos.cpp" />
     <ClCompile Include="Lista_Estudiante.cpp" />
     <ClCompile Include="Lista_Grupos.cpp" />
     <ClCompile Include="Lista_Profesores.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Grupo.h" />
     <ClInclude Include="Horario.h" />
     <ClInclude Include="Interfaz.h" />
+    <ClInclude Include="Lista_Cursos.h" />
     <ClInclude Include="Lista_Estudiante.h" />
     <ClInclude Include="Lista_Grupos.h" />
     <ClInclude Include="Lista_Profesores.h" />

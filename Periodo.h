@@ -2,34 +2,20 @@
 #include <iostream> 
 #include <sstream> 
 #include <string> 
-#include "Grupo.h"
-#define NUM_CURSOS 3
+#include "Lista_Cursos.h"
 using namespace std;
 
 class Periodo {
-protected:
-	/*string periodo;
-	int cantidad_cursos;*/
-	/*Grupo** lista_cursos; Solamente a esto */
-
-	//void inicializar_listaCursos() {
-	//	lista_cursos = new Grupo * [NUM_CURSOS];
-
-	//	for (int i = 0; i < NUM_CURSOS; i++) {
-	//		lista_cursos[i] = nullptr;
-	//	}
-	}
+private:
+	Lista_Cursos* cursos;
+	int Periodo_Seleccionado;
 public:
-	Periodo(string);
+	Periodo();
+	Periodo(int);
 	virtual ~Periodo();
-
-	void set_periodo(string);
-	bool ingresar_curso(Grupo*);
-	bool eliminar_curso(string);
-
-	string get_periodo();
-	bool buscar_curso(string);
-	Grupo* get_curso(string);
-
+	void setLista_Cursos(Lista_Cursos*);
+	void setPeriodo(int);
+	Lista_Cursos* getCursos();
+	int getPeriodo();
 	string toString();
 };

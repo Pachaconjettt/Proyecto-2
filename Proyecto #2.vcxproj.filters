@@ -19,35 +19,20 @@
     <Filter Include="Source Files\Listas">
       <UniqueIdentifier>{a4db7dce-7acd-4796-a550-6fc67e27d031}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Interfaz">
+      <UniqueIdentifier>{1e9550ca-356e-4137-9012-7a13910c3273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Clases">
+      <UniqueIdentifier>{c7be4968-ba77-415c-a842-68e7cfc01fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interfaz_&amp;_Main">
+      <UniqueIdentifier>{0c44c64e-f238-44a2-a341-59106d492d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Clases">
+      <UniqueIdentifier>{7aa0ab33-0004-4cd7-9db4-74947aa280f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Interfaz.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Horario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Curso.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Grupo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Persona.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Profesor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Estudiante.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Periodo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Lista_Estudiante.cpp">
       <Filter>Source Files\Listas</Filter>
     </ClCompile>
@@ -57,32 +42,38 @@
     <ClCompile Include="Lista_Profesores.cpp">
       <Filter>Source Files\Listas</Filter>
     </ClCompile>
+    <ClCompile Include="Lista_Cursos.cpp">
+      <Filter>Source Files\Listas</Filter>
+    </ClCompile>
+    <ClCompile Include="Interfaz.cpp">
+      <Filter>Source Files\Interfaz_&amp;_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files\Interfaz_&amp;_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Estudiante.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
+    <ClCompile Include="Curso.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
+    <ClCompile Include="Horario.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
+    <ClCompile Include="Periodo.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
+    <ClCompile Include="Profesor.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
+    <ClCompile Include="Grupo.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
+    <ClCompile Include="Persona.cpp">
+      <Filter>Source Files\Clases</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Interfaz.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Horario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Curso.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Grupo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Persona.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Profesor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Estudiante.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Periodo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Lista_Estudiante.h">
       <Filter>Header Files\Listas</Filter>
     </ClInclude>
@@ -91,6 +82,33 @@
     </ClInclude>
     <ClInclude Include="Lista_Profesores.h">
       <Filter>Header Files\Listas</Filter>
+    </ClInclude>
+    <ClInclude Include="Lista_Cursos.h">
+      <Filter>Header Files\Listas</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaz.h">
+      <Filter>Header Files\Interfaz</Filter>
+    </ClInclude>
+    <ClInclude Include="Curso.h">
+      <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Estudiante.h">
+      <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Grupo.h">
+      <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Horario.h">
+      <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Periodo.h">
+      <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Profesor.h">
+      <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Persona.h">
+      <Filter>Header Files\Clases</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

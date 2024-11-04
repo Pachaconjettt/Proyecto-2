@@ -1,4 +1,4 @@
-#include "Lista_Grupos.h"
+		#include "Lista_Grupos.h"
 Nodo_Grupos::Nodo_Grupos(Grupo* group, Nodo_Grupos* next) {
 	this->theGroup = group;
 	this->next = next;

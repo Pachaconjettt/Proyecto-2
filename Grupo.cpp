@@ -48,6 +48,7 @@ string Grupo::toString() {
 	s << horario->toString() << endl;
 	return s.str();
 }
+Horario* Grupo::getHorario() { return this->horario;  }
 //bool Grupo::buscar_estudiante(string id) {
 //	for (int i = 0; i < cantidad_estudiantes; i++) {
 //		if (estudiantes_matriculados[i]->get_id() == id) {

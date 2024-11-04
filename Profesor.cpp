@@ -2,7 +2,6 @@
 
 Profesor::Profesor(string nombre, string id, int telefono, int edad, string email, string grado_academico) : Persona(nombre, id, telefono, edad, email) {
 	this->grado_academico = grado_academico;
-	this->listaGrupos = new Lista_Grupos(); 
 }
 Profesor::~Profesor() {}
 
@@ -19,6 +18,7 @@ string Profesor::toString() {
 	s << "Grado academico: " << grado_academico << endl;
 	return s.str();
 }
-void Profesor::matricularProfeEnGrupo(Grupo* grupos) {
-	listaGrupos->insertarInicio(grupos);
-}
+//void Profesor::matricularProfeEnGrupo(Grupo* grupos) {
+//	listaGrupos->insertarInicio(grupos);
+// NO ERA COMO DECIA, grupos van en profesores
+//}

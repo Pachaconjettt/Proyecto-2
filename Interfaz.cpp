@@ -1,6 +1,12 @@
 #include "Interfaz.h"
 
-Interfaz::Interfaz() {}
+Interfaz::Interfaz() {
+    this->periodo = new Periodo(); 
+    this->profes = new Lista_Profesores(); 
+    this->estudiantes = new Lista_Estudiante(); 
+    this->cursoos = nullptr; 
+    this->groups = nullptr; 
+}
 
 void Interfaz::menu_principal() {
     int opcion = 1;
@@ -19,7 +25,7 @@ void Interfaz::menu_principal() {
         switch (opcion) {
         case 1: {
             system("cls");
-            submenu_administarcion();
+            submenu_administracion();
             break;
         }
         case 2: {
@@ -56,7 +62,7 @@ void Interfaz::menu_principal() {
     exit(0);
 }
 
-void Interfaz::submenu_administarcion() {
+void Interfaz::submenu_administracion() {
     int opcion = 1;
 
     while (opcion != 0) {
@@ -131,25 +137,133 @@ void Interfaz::submenu_administarcion() {
     system("cls");
 }
 void Interfaz::ingresar_profesor() {
-    //Profesor* profe_1 = new Profesor("chris", "1-18980608", 71840668, 20, "chrisblanco.2004@gmail.com", "Doctorado");
-
-    cout << "Has ingresado un profesor" << endl << endl;
-    //cout << "-------------------Info profesor-------------------" << endl;
-    //cout << profe_1->toString() << endl;
-    //delete profe_1;
+    string nombre, id, email, grado_Academico;
+    int telefono, edad;
+    Profesor* teacher = nullptr;
+    cout << "-------------------------------(1) Ingresar Profesor --------------------------" << endl;
+    cout << "Ingrese el nombre: ";
+    cin >> nombre; 
+    cout << endl; 
+    cout << "Ingrese el id: "; 
+    cin >> id; 
+    cout << endl; 
+    cout << "Ingrese el telefono: ";
+    cin >> telefono; 
+    cout << endl; 
+    cout << "Ingrese la edad del Profesor: "; 
+    cin >> edad; 
+    cout << endl; 
+    cout << "Ingrese el email del profesor: ";
+    cin >> email; 
+    cout << endl; 
+    cout << "Ingrese el grado academico: "; 
+    cin >> grado_Academico;
+    teacher = new Profesor(nombre, id, telefono, edad, email, grado_Academico);
+    profes->InsertarInicio(teacher); 
 }
 void Interfaz::ingresar_estudiante() {
-    //Estudiante* estudiante_1 = new Estudiante("josu", "1-1234567", 98765432, 19, "josher.16@gmail.com", "Ingenieria");
-
-    cout << "Has ingresado un estudiante" << endl << endl;
-    //cout << "-------------------Info estudiante-------------------" << endl;
-    //cout << estudiante_1->toString() << endl;
-    //delete estudiante_1;
+    string nombre, id, email, especialidad; 
+    int telefono, edad;
+    Estudiante* student = nullptr; 
+    cout << "-------------------------------(2) Ingresar Estudiante --------------------------" << endl;
+    cout << "Ingrese el nombre: ";
+    cin >> nombre;
+    cout << endl;
+    cout << "Ingrese el id: ";
+    cin >> id;
+    cout << endl;
+    cout << "Ingrese el telefono: ";
+    cin >> telefono;
+    cout << endl;
+    cout << "Ingrese la edad del estudiante: ";
+    cin >> edad;
+    cout << endl;
+    cout << "Ingrese el email del estudiante: ";
+    cin >> email;
+    cout << endl;
+    cout << "Ingrese la especialidad: ";
+    cin >> especialidad;
+    student = new Estudiante(nombre, id, telefono, edad, email, especialidad); 
+    estudiantes->insertarInicio(student);
 }
-void Interfaz::ingresar_Periodo() { cout << "Has ingresado un bloque o periodo" << endl; }
-void Interfaz::ingresar_curso() { cout << "Has ingresado un curso" << endl; }
-void Interfaz::ingresar_grupo() { cout << "Has ingresado un grupo" << endl; }
-void Interfaz::asignar_ProfesorAGrupo() { cout << "Has asignado un profesor a un grupo" << endl; }
+void Interfaz::ingresar_Periodo() { 
+    cout << "-------------------------------(3) Ingresar Periodo --------------------------" << endl;
+    int periodo; 
+    Periodo* period = nullptr; 
+    cout << "Periodo 1: Enero a Marzo " << endl; 
+    cout << "Periodo 2: Abril a Junio " << endl; 
+    cout << "Periodo 3: Julio a Septiembre " << endl; 
+    cout << "Periodo 4: Octubre a Diciembre " << endl; 
+    cout << "Eliga el periodo por medio del numero correspondiente (1 - 4) "; 
+    cin >> periodo; 
+    cout << endl; 
+    period = new Periodo(periodo);
+}
+void Interfaz::ingresar_curso() { 
+    string nombre, id; 
+    int horas, precio, estado;
+    Curso* course = nullptr; 
+    cout << "-------------------------------(4) Ingresar Curso  --------------------------" << endl;
+    cout << "Ingrese el nombre del curso: ";
+    cin >> nombre;
+    cout << endl;
+    cout << "Ingrese el id del curso: ";
+    cin >> id;
+    cout << endl;
+    cout << "Ingrese las horas que tiene el curso: ";
+    cin >> horas ;
+    cout << endl;
+    cout << "Ingrese el precio que tiene el curso: ";
+    cin >> precio;
+    cout << endl;
+    cout << "Ingrese el estado del curso (Si esta Disponible : 1 y no Disponible: 0 ): ";
+    cin >> estado;
+    cout << endl;
+    course = new Curso(nombre, id, horas, precio, estado);
+    periodo->getCursos()->insertarInicio(course);
+}
+void Interfaz::ingresar_grupo() {
+    int num_Grupos, cupoMaximo;
+    int dia, horas;
+    string evento;
+    cout << "-------------------------------(5) Ingresar Grupos  --------------------------" << endl;
+    cout << "Ingrese el numero del curso: ";
+    cin >> num_Grupos;
+    cout << endl;
+    cout << "Ingrese el cupo maximo del curso: ";
+    cin >> cupoMaximo;
+    cout << endl;
+
+    // Initialize grupooo before using it
+    Grupo* grupooo = new Grupo(num_Grupos, cupoMaximo);
+
+    cout << "Ingrese el horario del Grupo: " << endl;
+    cout << grupooo->getHorario()->toString() << endl;
+    cout << "Ingrese el día (1-5, donde 1=Lun, 2=Mar, 3=Mie, 4=Jue, 5=Vie) o -1 para salir: ";
+    cin >> dia;
+    cout << "Ingrese la hora (1-5, donde 1=8-10, 2=10-12, 3=12-14, 4=14-16, 5=16-18): ";
+    cin >> horas;
+    cout << "Ingrese el curso: ";
+    cin >> evento;
+    grupooo->getHorario()->ingresar_evento(horas, dia, evento);
+    cout << "Horario actual:" << endl;
+    cout << grupooo->getHorario()->toString() << endl;
+
+    // Insert the group into the list
+    periodo->getCursos()->getPrimero()->getTheCurso()->getGrupoLista()->insertarInicio(grupooo);
+}
+void Interfaz::asignar_ProfesorAGrupo() { 
+    string id, CourseID ;
+    cout << "-------------------------------(6) Asignar Profesor a Grupo  --------------------------" << endl;
+    cout << "Ingrese el id del profesor :" << endl; 
+    cin >> id; 
+    cout << periodo->getCursos()->toStringCursos() << endl;
+    cout << "Ingrese el id del Curso que quiere poner al profesor :" << endl; 
+    cin >> CourseID;
+    cout << periodo->getCursos()->getPrimero()->getTheCurso()->getGrupoLista()->toString() << endl; 
+    cout << "Ingrese el id del grupo del curso que quiere meter al profe " << endl;
+
+}
 
 void Interfaz::submenu_matricula() {
     int opcion = 1;

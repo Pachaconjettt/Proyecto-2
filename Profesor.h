@@ -5,7 +5,7 @@
 class Profesor : public Persona {
 private:
 	string grado_academico;
-	/*Lista_Grupos* listaGrupos; */
+	/*Lista_Grupos* listaGrupos; NO TOMAR EN CUENTO LO PUESTO EN COMENTARIOS*/
 public:
 	Profesor(string, string, int, int, string, string);
 	virtual ~Profesor(); 
