@@ -78,3 +78,13 @@ string Lista_Estudiante::toString() {
 	}
 	return s.str(); 
 }
+Estudiante* Lista_Estudiante::buscarEstudianteXID(string id){
+	Nodo_Estudiante* aux = first; 
+	while (aux != nullptr) {
+		if (aux->getTheStudent()->get_id() == id) {
+			return aux->getTheStudent();
+		}
+		aux = aux->getNext();
+	}
+	return nullptr; 
+}

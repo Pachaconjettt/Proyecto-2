@@ -31,6 +31,7 @@ public:
 	void eliminarPrimero(); 
 	int getQuantProfesor(); 
 	Nodo_Profesor* getPrimero(); 
+	Profesor* getProfesorXId(string);
 	string toString(); 
 };
 

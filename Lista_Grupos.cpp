@@ -79,3 +79,13 @@ string Lista_Grupos::toString() {
 	}
 	return s.str(); 
 }
+Grupo* Lista_Grupos::getGrupoXNumero(int num){
+	Nodo_Grupos* aux = first; 
+	while (aux != nullptr) {
+		if (aux->getGrupo()->get_numGrupo() == num) {
+			return aux->getGrupo();
+		}
+		aux = aux->getNext(); 
+	}
+	return nullptr; 
+}

@@ -7,7 +7,7 @@ Grupo::Grupo(int numGroup, /*int cantidadEst,*/ int cupoMaximo/*, Horario* calen
 	this->cupoMaximo = cupoMaximo; 
 	this->horario = new Horario();
 	this->listaStudents = new Lista_Estudiante(); 
-	//profesor = nullptr;
+	this->profesor = nullptr;
 	//inicializar_lista();
 }
 Grupo::~Grupo() {
@@ -22,9 +22,25 @@ Grupo::~Grupo() {
 void Grupo::set_numGrupo(int numGrupo) { this->num_grupo = numGrupo; }
 void Grupo::set_cantidadEstudiantes(int numEstudiantes) { this->cantidad_estudiantes = numEstudiantes; }
 void Grupo::set_CupoMaximos(int cupos) { this->cupoMaximo = cupos; }
+void Grupo::unirProfesorAGrupo(Profesor* profesor1) { 
+		this->profesor = profesor;
+}
 void Grupo::matricularEstudiante(Estudiante* estudiante) {
-	listaStudents->insertarInicio(estudiante); 
-	cantidad_estudiantes++;
+	if (cantidad_estudiantes < cupoMaximo) {
+		listaStudents->insertarInicio(estudiante);
+		cantidad_estudiantes++;
+	}
+}
+
+bool Grupo::estudianteYaMatriculado(Estudiante* estudiante) {
+	Nodo_Estudiante* actual = listaStudents->getFirst();
+	while (actual != nullptr) {
+		if (actual->getTheStudent()->get_id() == estudiante->get_id()) {
+			return true;
+		}
+		actual = actual->getNext();
+	}
+	return false;
 }
 int Grupo::get_numGrupo() { return num_grupo; }
 int Grupo::get_cuposMaximos() { return cupoMaximo; }
@@ -41,13 +57,14 @@ Estudiante* Grupo::getEstudiante(string id) {
 }
 string Grupo::toString() {
 	stringstream s;
-	s << "Numero del curso : " << num_grupo << endl;
+	s << "Numero del grupo : " << num_grupo << endl;
 	s << "Cupo maximo : " << cupoMaximo << endl;
-	s << "Cantidad de matriculados " << cantidad_estudiantes << endl;
-	s << "Horario: " << endl;
+	s << "Cantidad de matriculados en el grupo " << cantidad_estudiantes << endl;
+	s << "Horario del grupo : " << endl;
 	s << horario->toString() << endl;
 	return s.str();
 }
+Profesor* Grupo::getProfesor() { return this->profesor; }
 Horario* Grupo::getHorario() { return this->horario;  }
 //bool Grupo::buscar_estudiante(string id) {
 //	for (int i = 0; i < cantidad_estudiantes; i++) {

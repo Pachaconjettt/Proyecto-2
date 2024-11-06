@@ -29,6 +29,7 @@ public:
 	void insertarInicio(Estudiante*); 
 	void eliminarFinal(); 
 	void eliminarPrimero();
+	Estudiante* buscarEstudianteXID(string);
 	int getQuantStudents();
 	string toString(); 
 	Nodo_Estudiante* getFirst();

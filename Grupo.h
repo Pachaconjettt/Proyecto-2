@@ -37,13 +37,16 @@ public:
 	void set_cantidadEstudiantes(int);
 	void set_CupoMaximos(int);
 	void matricularEstudiante(Estudiante*);
+	void unirProfesorAGrupo(Profesor*); 
 	int get_numGrupo();
 	int get_cuposMaximos();
 	int get_cantidadEstudiantes();
+	Profesor* getProfesor();
 	Horario* getHorario(); 
 	string toString();
 	Lista_Estudiante* getGrupoLista(); 
 	Estudiante* getEstudiante(string id); 
+	bool estudianteYaMatriculado(Estudiante* estudiante);
 	//void asingar_profesor(Profesor*);
 	//bool eliminar_profesor();
 	//bool agregar_estudiante(Estudiante*);

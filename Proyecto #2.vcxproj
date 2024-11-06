@@ -135,6 +135,7 @@
     <ClCompile Include="Lista_Cursos.cpp" />
     <ClCompile Include="Lista_Estudiante.cpp" />
     <ClCompile Include="Lista_Grupos.cpp" />
+    <ClCompile Include="Lista_periodos.cpp" />
     <ClCompile Include="Lista_Profesores.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Periodo.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Lista_Cursos.h" />
     <ClInclude Include="Lista_Estudiante.h" />
     <ClInclude Include="Lista_Grupos.h" />
+    <ClInclude Include="Lista_periodos.h" />
     <ClInclude Include="Lista_Profesores.h" />
     <ClInclude Include="Periodo.h" />
     <ClInclude Include="Persona.h" />

@@ -32,5 +32,6 @@ public:
 	int getQuantGroups(); 
 	Nodo_Grupos* getPrimero(); 
 	string toString(); 
+	Grupo* getGrupoXNumero(int); 
 };
 

@@ -79,3 +79,13 @@ string Lista_Profesores::toString() {
 	}
 	return s.str();
 }
+Profesor* Lista_Profesores::getProfesorXId(string id) {
+	Nodo_Profesor* aux = first;
+	while (aux != nullptr) {
+		if (aux->getProfesor()->get_id() == id) {
+			return aux->getProfesor();
+		}
+		aux = aux->getNext();
+	}
+	return nullptr; 
+}

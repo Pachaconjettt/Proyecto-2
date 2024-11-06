@@ -29,7 +29,10 @@ public:
 	void eliminarFinal();
 	void eliminarPrimero();
 	int getQuantNodes();
+	Curso* cursoXId(string); 
 	Nodo_Cursos* getPrimero();
 	string toStringCursos();
+	int PrecioTotal(string ); 
+	string ListaCursosEstudiante(string); 
 };
 

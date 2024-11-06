@@ -31,7 +31,7 @@ Lista_Cursos::~Lista_Cursos() {
 	}
 }
 void Lista_Cursos::insertarInicio(Curso* course) {
-	first = new Nodo_Cursos(course, nullptr);
+	first = new Nodo_Cursos(course, first);
 	quantCourses++;
 }
 void Lista_Cursos::eliminarFinal() {
@@ -75,9 +75,41 @@ string Lista_Cursos::toStringCursos() {
 	 int so = 1;
 	while (aux != nullptr) {
 		s << "---------------------------" << so << "----------------------------" << endl; 
-		s << aux->getTheCurso()->toString() << endl;
+		s << aux->toStringNode() << endl;
 		aux = aux->getNext();
 		so++;
 	}
 	return s.str();
+}
+Curso* Lista_Cursos::cursoXId(string id){
+	Nodo_Cursos* aux = first; 
+	while (aux != nullptr) {
+		if (aux->getTheCurso()->get_id() == id) {
+			return aux->getTheCurso();
+		}
+		aux = aux->getNext();
+	}
+	return nullptr; 
+}
+int Lista_Cursos::PrecioTotal(string id) {
+	int precio = 0;
+	Nodo_Cursos* aux = first; 
+	while (aux != nullptr) {
+		if (aux->getTheCurso()->getGrupoLista()->getPrimero()->getGrupo()->getEstudiante(id) != nullptr) {
+			precio += aux->getTheCurso()->get_precio();
+		}
+		aux = aux->getNext(); 
+	}
+	return precio; 
+}
+string Lista_Cursos::ListaCursosEstudiante(string id) {
+	stringstream s;
+	Nodo_Cursos* aux = first; 
+	while (aux != nullptr) {
+		if (aux->getTheCurso()->getGrupoLista()->getPrimero()->getGrupo()->getEstudiante(id) != nullptr) {
+			s << aux->toStringNode() << endl; 
+		}
+		aux = aux->getNext();
+	}
+	return s.str(); 
 }

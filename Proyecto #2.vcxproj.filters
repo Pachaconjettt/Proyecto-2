@@ -72,6 +72,9 @@
     <ClCompile Include="Persona.cpp">
       <Filter>Source Files\Clases</Filter>
     </ClCompile>
+    <ClCompile Include="Lista_periodos.cpp">
+      <Filter>Source Files\Listas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lista_Estudiante.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="Persona.h">
       <Filter>Header Files\Clases</Filter>
+    </ClInclude>
+    <ClInclude Include="Lista_periodos.h">
+      <Filter>Header Files\Listas</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
