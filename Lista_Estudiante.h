@@ -30,6 +30,7 @@ public:
 	void eliminarFinal(); 
 	void eliminarPrimero();
 	Estudiante* buscarEstudianteXID(string);
+	void eliminarEstudiantePorID(const string& id);
 	int getQuantStudents();
 	string toString(); 
 	Nodo_Estudiante* getFirst();

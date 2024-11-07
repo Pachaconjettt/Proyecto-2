@@ -25,7 +25,7 @@ public:
 	void ingresar_curso();
 	void ingresar_grupo();
 	void asignar_ProfesorAGrupo();
-
+	void mostrarFactura(const string& , int );
 	void submenu_matricula();
 	void matricular_estudiante();
 	void desmatricular_estudiante();

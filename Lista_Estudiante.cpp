@@ -88,3 +88,23 @@ Estudiante* Lista_Estudiante::buscarEstudianteXID(string id){
 	}
 	return nullptr; 
 }
+void Lista_Estudiante::eliminarEstudiantePorID(const string& id) {
+	Nodo_Estudiante* actual = first;
+	Nodo_Estudiante* anterior = nullptr;
+
+	while (actual != nullptr) {
+		if (actual->getTheStudent()->get_id() == id) {
+			if (anterior == nullptr) {
+				first = actual->getNext();
+			}
+			else {
+				anterior->setNext(actual->getNext());
+			}
+			delete actual;
+			quantEstudiantes--;
+			return;
+		}
+		anterior = actual;
+		actual = actual->getNext();
+	}
+}

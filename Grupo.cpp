@@ -26,11 +26,10 @@ void Grupo::unirProfesorAGrupo(Profesor* profesor1) {
 		this->profesor = profesor;
 }
 void Grupo::matricularEstudiante(Estudiante* estudiante) {
-	if (cantidad_estudiantes < cupoMaximo) {
-		listaStudents->insertarInicio(estudiante);
-		cantidad_estudiantes++;
-	}
+	listaStudents->insertarInicio(estudiante);
+	cantidad_estudiantes++;
 }
+
 
 bool Grupo::estudianteYaMatriculado(Estudiante* estudiante) {
 	Nodo_Estudiante* actual = listaStudents->getFirst();
@@ -46,15 +45,17 @@ int Grupo::get_numGrupo() { return num_grupo; }
 int Grupo::get_cuposMaximos() { return cupoMaximo; }
 int Grupo::get_cantidadEstudiantes() { return cantidad_estudiantes; }
 Lista_Estudiante* Grupo::getGrupoLista() { return this->listaStudents; }
-Estudiante* Grupo::getEstudiante(string id) {
-	Lista_Estudiante* aux = listaStudents; 
+Estudiante * Grupo::getEstudiante(string id) {
+	Lista_Estudiante * aux = listaStudents;
 	while (aux->getFirst()) {
-		if (aux->getFirst()->getTheStudent()->get_id() == id) {
+		if (aux->getFirst()->getTheStudent()->get_id() == id)
 			return aux->getFirst()->getTheStudent();
-		}
+		else
+			aux->eliminarPrimero();
 	}
 	return nullptr;
 }
+
 string Grupo::toString() {
 	stringstream s;
 	s << "Numero del grupo : " << num_grupo << endl;

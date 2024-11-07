@@ -45,6 +45,7 @@ public:
 	Horario* getHorario(); 
 	string toString();
 	Lista_Estudiante* getGrupoLista(); 
+	
 	Estudiante* getEstudiante(string id); 
 	bool estudianteYaMatriculado(Estudiante* estudiante);
 	//void asingar_profesor(Profesor*);

@@ -33,6 +33,7 @@ public:
 	Nodo_Cursos* getPrimero();
 	string toStringCursos();
 	int PrecioTotal(string ); 
+	float PrecioConDescuento(string); 
 	string ListaCursosEstudiante(string); 
 };
 

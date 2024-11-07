@@ -73,7 +73,7 @@ string Lista_Grupos::toString() {
 	Nodo_Grupos* aux = first; 
 	while (aux != nullptr) {
 		s << "-----------------------" << so << "------------------------" << endl;
-		s << aux->getGrupo()->toString() << endl; 
+		s << aux->toString_NodeGroup() << endl; 
 		aux = aux->getNext(); 
 		so++;
 	}

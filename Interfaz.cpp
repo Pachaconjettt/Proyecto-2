@@ -195,18 +195,20 @@ void Interfaz::ingresar_Periodo() {
     cout << "Eliga el periodo por medio del numero correspondiente (1 - 4) "; 
     cin >> periodo1; 
     cout << endl; 
-    period = new Periodo(periodo1);
-    periodo->ingresarPrimero(period); 
+    Periodo* nuevoPeriodo = new Periodo(periodo1);
+    periodo->ingresarPrimero(nuevoPeriodo);
+
+    cout << "Periodo ingresado exitosamente." << endl;
 }
-void Interfaz::ingresar_curso() { 
-    string nombre, id; 
+void Interfaz::ingresar_curso() {
+    string nombre, id;
     int horas, precio, estado;
     int periodo1;
-    Curso* course = nullptr; 
+    Curso* course = nullptr;
     cout << "-------------------------------(4) Ingresar Curso  --------------------------" << endl;
     cout << periodo->toStringPeriodos() << endl;
-    cout << "Ingrese algun periodo de los periodos disponibles para ingresar a este curso " << endl; 
-    cin >> periodo1; 
+    cout << "Ingrese algun periodo de los periodos disponibles para ingresar a este curso " << endl;
+    cin >> periodo1;
     cout << "Ingrese el nombre del curso: ";
     cin >> nombre;
     cout << endl;
@@ -214,7 +216,7 @@ void Interfaz::ingresar_curso() {
     cin >> id;
     cout << endl;
     cout << "Ingrese las horas que tiene el curso: ";
-    cin >> horas ;
+    cin >> horas;
     cout << endl;
     cout << "Ingrese el precio que tiene el curso: ";
     cin >> precio;
@@ -223,11 +225,26 @@ void Interfaz::ingresar_curso() {
     cin >> estado;
     cout << endl;
     course = new Curso(nombre, id, horas, precio, estado);
-    periodo->getPeriodoXNum(periodo1)->getCursos()->insertarInicio(course);
+
+    // Verificar si el periodo existe
+    Periodo* selectedPeriodo = periodo->getPeriodoXNum(periodo1);
+    if (selectedPeriodo != nullptr) {
+        selectedPeriodo->getCursos()->insertarInicio(course);
+        // Mensaje de depuración
+        cout << "Curso añadido: " << course->toString() << endl;
+        cout << "Cursos actuales en el periodo " << periodo1 << ":" << endl;
+        cout << selectedPeriodo->getCursos()->toStringCursos() << endl;
+    }
+    else {
+        cout << "Periodo no encontrado." << endl;
+        delete course;
+    }
 }
+
 void Interfaz::ingresar_grupo() {
     int cupoMaximo, numGrupo;
     int dia, horas;
+    int numPeriodo;
     string id_course;
     string evento;
     bool idValido = false;
@@ -235,13 +252,23 @@ void Interfaz::ingresar_grupo() {
     cout << "-------------------------------(5) Ingresar Grupos  --------------------------" << endl;
     cout << periodo->toStringPeriodos() << endl;
 
+    cout << "Ingrese el numero de periodo (1-4) para poner grupo en el curso: ";
+    cin >> numPeriodo;
+
+    // Verificar si el periodo existe
+    Periodo* selectedPeriodo = periodo->getPeriodoXNum(numPeriodo);
+    if (selectedPeriodo == nullptr) {
+        cout << "Periodo no encontrado." << endl;
+        return;
+    }
+
     // Bucle para validar el ID del curso
     while (!idValido) {
         cout << "Ingrese el id del curso: ";
         cin >> id_course;
 
         // Verificar si el curso existe en el periodo
-        Curso* curso = periodo->getPrimero()->getPeriodo()->getCursos()->cursoXId(id_course);
+        Curso* curso = selectedPeriodo->getCursos()->cursoXId(id_course);
         if (curso != nullptr) {
             idValido = true;
         }
@@ -250,9 +277,8 @@ void Interfaz::ingresar_grupo() {
         }
     }
 
-    Curso* curso = periodo->getPrimero()->getPeriodo()->getCursos()->cursoXId(id_course);
+    Curso* curso = selectedPeriodo->getCursos()->cursoXId(id_course);
 
-    cout << endl;
     cout << "Ingrese el numero del grupo: ";
     cin >> numGrupo;
     while (numGrupo <= 0 || curso->getGrupoLista()->getGrupoXNumero(numGrupo) != nullptr) {
@@ -384,10 +410,102 @@ void Interfaz::submenu_matricula() {
 }
 void Interfaz::matricular_estudiante() {
     string id, idCourse;
-    int numGroup, numCursos, numPeriodo;
+    int numGroup, numPeriodo;
+    char continuar;
 
     cout << estudiantes->toString() << endl;
     cout << "Ingrese el id del estudiante que quiere matricular: ";
+    cin >> id;
+
+    Estudiante* estudiante = estudiantes->buscarEstudianteXID(id);
+    if (!estudiante) {
+        cout << "ID del estudiante no válido. Proceso cancelado." << endl;
+        return;
+    }
+    cout << periodo->toStringPeriodos() << endl;
+    cout << "\t SOLO PUEDE ESCOGER UN PERIODO PARA LA MATRICULA \t" << endl;
+    cout << "Ingrese el número del periodo: ";
+    cin >> numPeriodo;
+
+    do {
+        Periodo* periodoSeleccionado = periodo->getPeriodoXNum(numPeriodo);
+        if (periodoSeleccionado == nullptr) {
+            cout << "Número de periodo no válido. Proceso cancelado." << endl;
+            continue;
+        }
+
+        cout << periodoSeleccionado->toString() << endl;
+        cout << "Ingrese el id del curso: ";
+        cin >> idCourse;
+
+        Curso* cursoSeleccionado = periodoSeleccionado->getCursos()->cursoXId(idCourse);
+        if (cursoSeleccionado == nullptr) {
+            cout << "ID del curso no válido. Proceso cancelado." << endl;
+            continue;
+        }
+
+        cout << "Ingrese el número del grupo: ";
+        cin >> numGroup;
+
+        Grupo* grupoSeleccionado = cursoSeleccionado->getGrupoLista()->getGrupoXNumero(numGroup);
+        if (grupoSeleccionado == nullptr) {
+            cout << "Número de grupo no válido. Proceso cancelado." << endl;
+            continue;
+        }
+
+        if (grupoSeleccionado->estudianteYaMatriculado(estudiante)) {
+            cout << "El estudiante ya está matriculado en este grupo." << endl;
+            continue;
+        }
+
+        grupoSeleccionado->matricularEstudiante(estudiante);
+        cout << "Estudiante matriculado exitosamente." << endl;
+
+        cout << "¿Desea matricular al estudiante en otro curso? (s/n): ";
+        cin >> continuar;
+    } while (continuar == 's' || continuar == 'S');
+    // Generar y mostrar la factura detallada
+    system("cls");
+    cout << "\t\t\t\t Cursos matriculados por el estudiante: \t\t\t\t " << endl;
+    mostrarFactura(id, numPeriodo);
+}
+void Interfaz::mostrarFactura(const string & estudianteId, int numPeriodo) {
+    Periodo* periodoSeleccionado = periodo->getPeriodoXNum(numPeriodo);
+    if (periodoSeleccionado == nullptr) {
+        cout << "Número de periodo no válido. Proceso cancelado." << endl;
+        return;
+    }
+
+    Estudiante* estudiante = estudiantes->buscarEstudianteXID(estudianteId);
+    if (estudiante == nullptr) {
+        cout << "ID del estudiante no válido. Proceso cancelado." << endl;
+        return;
+    }
+
+    Lista_Cursos* cursos = periodoSeleccionado->getCursos();
+    double subtotal = cursos->PrecioTotal(estudianteId);
+    double IVA = 0.13;
+    double descuento = cursos->PrecioTotal(estudianteId) - cursos->PrecioConDescuento(estudianteId);
+    double total = cursos->PrecioConDescuento(estudianteId);
+    double ivaMonto = subtotal * IVA;
+
+    cout << "\t\t\t\t Factura de Matrícula \t\t\t\t" << endl;
+    cout << "Curso\t\tPrecio" << endl;
+    cout << cursos->ListaCursosEstudiante(estudianteId) << endl;
+
+    cout << "Subtotal: " << subtotal << " colones" << endl;
+    cout << "IVA (13%): " << ivaMonto << " colones" << endl;
+    cout << "Descuento: " << descuento << " colones" << endl;
+    cout << "Total a pagar: " << total << " colones" << endl;
+}
+
+
+void Interfaz::desmatricular_estudiante() {
+    string id, idCourse;
+    int numGroup, numPeriodo;
+
+    cout << estudiantes->toString() << endl;
+    cout << "Ingrese el id del estudiante que quiere desmatricular: ";
     cin >> id;
 
     Estudiante* estudiante = estudiantes->buscarEstudianteXID(id);
@@ -406,55 +524,36 @@ void Interfaz::matricular_estudiante() {
         return;
     }
 
-    cout << "Ingrese la cantidad de cursos que quiere matricular: ";
-    cin >> numCursos;
+    cout << periodoSeleccionado->toString() << endl;
+    cout << "Ingrese el id del curso: ";
+    cin >> idCourse;
 
-    for (int i = 0; i < numCursos; i++) {
-        cout << periodoSeleccionado->getCursos()->toStringCursos() << endl;
-        cout << "Ingrese el id del curso que quiere matricular: ";
-        cin >> idCourse;
-
-        Curso* curso = periodoSeleccionado->getCursos()->cursoXId(idCourse);
-        if (!curso) {
-            cout << "ID del curso no válido. Proceso cancelado." << endl;
-            continue;
-        }
-
-        cout << curso->getGrupoLista()->toString() << endl;
-        cout << "Ingrese el número del grupo que está disponible para matricular: ";
-        cin >> numGroup;
-
-        Grupo* grupo = curso->getGrupoLista()->getGrupoXNumero(numGroup);
-        if (!grupo) {
-            cout << "Número de grupo no válido. Proceso cancelado." << endl;
-            continue;
-        }
-
-        // Verificar que el grupo no esté lleno
-        if (grupo->get_cantidadEstudiantes() >= grupo->get_cuposMaximos()) {
-            cout << "El grupo está lleno. Proceso cancelado." << endl;
-            continue;
-        }
-
-        // Verificar que el estudiante no esté ya matriculado en otro grupo del mismo curso
-        if (grupo->estudianteYaMatriculado(estudiante)) {
-            cout << "El estudiante ya está matriculado en otro grupo de este curso. Proceso cancelado." << endl;
-            continue;
-        }
-
-        grupo->matricularEstudiante(estudiante);
-        cout << "Estudiante matriculado exitosamente en el curso " << curso->get_id() << " en el grupo " << grupo->get_numGrupo() << "." << endl;
-
-        // Generar y mostrar la factura detallada
-        system("cls");
-        cout << periodo->getPrimero()->getPeriodo()->getCursos()->ListaCursosEstudiante(estudiante->get_id());
+    Curso* cursoSeleccionado = periodoSeleccionado->getCursos()->cursoXId(idCourse);
+    if (cursoSeleccionado == nullptr) {
+        cout << "ID del curso no válido. Proceso cancelado." << endl;
+        return;
     }
-    cout << "Precio total a pagar : " << endl;
-    cout << "Precio: " << periodoSeleccionado->getCursos()->PrecioTotal(id) << " colones" << endl;
+
+    cout << "Ingrese el número del grupo: ";
+    cin >> numGroup;
+
+    Grupo* grupoSeleccionado = cursoSeleccionado->getGrupoLista()->getGrupoXNumero(numGroup);
+    if (grupoSeleccionado == nullptr) {
+        cout << "Número de grupo no válido. Proceso cancelado." << endl;
+        return;
+    }
+
+    if (!grupoSeleccionado->estudianteYaMatriculado(estudiante)) {
+        cout << "El estudiante no está matriculado en este grupo." << endl;
+        return;
+    }
+
+    // Eliminar al estudiante del grupo
+    grupoSeleccionado->getGrupoLista()->eliminarEstudiantePorID(id);
+
+    cout << "Estudiante desmatriculado exitosamente." << endl;
 }
 
-
-void Interfaz::desmatricular_estudiante() { cout << "Has desmatriculado un estudiante" << endl; }
 
 void Interfaz::submenu_busquedaInformes() {
     int opcion = 1;
