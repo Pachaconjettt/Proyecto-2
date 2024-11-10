@@ -33,5 +33,6 @@ public:
 	Nodo_Grupos* getPrimero(); 
 	string toString(); 
 	Grupo* getGrupoXNumero(int); 
+	Grupo* getGrupoXProfesorID(string);
 };
 

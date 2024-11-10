@@ -177,3 +177,15 @@ string Lista_Cursos::ListaCursosEstudiante(string id) {
     }
     return s.str();
 }
+string Lista_Cursos::ListaCursosProfesor(string _id) {
+    stringstream s;
+    Nodo_Cursos* aux = first;
+    while (aux != nullptr) {
+        if (aux->getTheCurso()->getGrupoLista()->getGrupoXProfesorID(_id) != nullptr) {
+            s << aux->toStringNode() << endl;
+            s << aux->getTheCurso()->getGrupoLista()->getGrupoXProfesorID(_id)->toString() << endl;
+        }
+        aux = aux->getNext();
+    }
+    return s.str();
+}

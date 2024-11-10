@@ -561,7 +561,7 @@ void Interfaz::submenu_busquedaInformes() {
     while (opcion != 0) {
         cout << "-------------------SUBMENU ADMINISTRACION-----------------" << endl;
         cout << "(1) Informe de profesores registrados" << endl;
-        cout << "(2) Infomre de estudiantes registrados" << endl;
+        cout << "(2) Informe de estudiantes registrados" << endl;
         cout << "(3) Informe de cursos registrados por un estudiante" << endl;
         cout << "(4) Informe de profesor especifico" << endl;
         cout << "(5) Informe de periodos habilitados para el annio" << endl;
@@ -621,11 +621,78 @@ void Interfaz::submenu_busquedaInformes() {
     }
     system("cls");
 }
-void Interfaz::informe_ProfesoresRegistrados() { cout << "Generando informe de profesores registrados..." << endl; }
-void Interfaz::informe_EstudiantesRegistrados() { cout << "Generando informe de estudiantes registrados..." << endl; }
-void Interfaz::informe_CursosMatriculados_PorEstudiante() { cout << "Generando informe de cursos matriculados por un estudiante..." << endl; }
-void Interfaz::informe_ProfesorEspecifico() { cout << "Generando informe de un profesor específico..." << endl; }
-void Interfaz::informe_PeriodosHabilitados_ParaAnio() { cout << "Generando informe de periodos habilitados para el año..." << endl; }
-void Interfaz::informe_GrupoEspecifico() { cout << "Generando informe de un grupo específico..." << endl; }
+void Interfaz::informe_ProfesoresRegistrados() {
+    cout << "\t\t\t Informe Profesores Registrados \t\t\t" << endl;
+    cout << profes->toString() << endl;
+}
+void Interfaz::informe_EstudiantesRegistrados() { 
+    cout << "\t\t\t Informe Estudiantes Registrados \t\t\t" << endl;
+    cout << estudiantes->toString() << endl;
+}
+void Interfaz::informe_CursosMatriculados_PorEstudiante() {
+    string id;
+    int period;
+    cout << "\t\t\t Informe Cursos Matriculados Por Estudiante \t\t\t" << endl;
+    cout << estudiantes->toString() << endl; 
+    cout << "Ingrese el id del estudiante : " << endl;
+    cin >> id;
+    cout << "Ingrese el periodo : " << endl;
+    cin >> period;
+    cout << periodo->getPeriodoXNum(period)->getCursos()->ListaCursosEstudiante(id) << endl;
+}
+void Interfaz::informe_ProfesorEspecifico() {
+    string id; 
+    int period; 
+    cout << "\t\t\t Informe Profesores especificos cursos \t\t\t" << endl;
+    cout << periodo->toStringPeriodos() << endl; 
+    cout << "Ingrese el periodo deseado para ver " << endl;
+    cin >> period; 
+    cout << profes->toString() << endl; 
+    cout << "Ingrese el id del profesor que desea ver los cursos " << endl; 
+    cin >> id; 
+    cout << periodo->getPeriodoXNum(period)->getCursos()->ListaCursosProfesor(id) << endl; 
+}
+
+
+void Interfaz::informe_PeriodosHabilitados_ParaAnio() { 
+    cout << "\t\t\t Informe Periodos habilitados para el annio 2024 \t\t\t" << endl;
+    cout << periodo->toStringPeriodos() << endl; 
+}
+void Interfaz::informe_GrupoEspecifico() {
+    int numPeriodo;
+    string idCourse;
+    cout << periodo->toStringPeriodos() << endl;
+    cout << "Ingrese el número del periodo: ";
+    cin >> numPeriodo;
+
+    Periodo* periodoSeleccionado = periodo->getPeriodoXNum(numPeriodo);
+    if (periodoSeleccionado == nullptr) {
+        cout << "Número de periodo no válido. Proceso cancelado." << endl;
+        return;
+    }
+
+    cout << periodoSeleccionado->toString() << endl;
+    cout << "Ingrese el id del curso: ";
+    cin >> idCourse;
+
+    Curso* cursoSeleccionado = periodoSeleccionado->getCursos()->cursoXId(idCourse);
+    if (cursoSeleccionado == nullptr) {
+        cout << "ID del curso no válido. Proceso cancelado." << endl;
+        return;
+    }
+
+    cout << cursoSeleccionado->getGrupoLista()->toString() << endl;
+    cout << "Ingrese el número del grupo: ";
+    int numGroup;
+    cin >> numGroup;
+
+    Grupo* grupoSeleccionado = cursoSeleccionado->getGrupoLista()->getGrupoXNumero(numGroup);
+    if (grupoSeleccionado == nullptr) {
+        cout << "Número de grupo no válido. Proceso cancelado." << endl;
+        return;
+    }
+
+    cout << grupoSeleccionado->toString() << endl;
+}
 
 void Interfaz::guardar_datos() { cout << "Has guardado los datos" << endl; }

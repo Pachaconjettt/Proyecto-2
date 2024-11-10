@@ -35,5 +35,6 @@ public:
 	int PrecioTotal(string ); 
 	float PrecioConDescuento(string); 
 	string ListaCursosEstudiante(string); 
+	string ListaCursosProfesor(string);
 };
 

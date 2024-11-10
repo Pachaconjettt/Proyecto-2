@@ -8,6 +8,7 @@ private:
 	/*Lista_Grupos* listaGrupos; NO TOMAR EN CUENTO LO PUESTO EN COMENTARIOS*/
 public:
 	Profesor(string, string, int, int, string, string);
+	Profesor(); 
 	virtual ~Profesor(); 
 	void set_gradoAcademico(string);
 	//void matricularProfeEnGrupo(Grupo*);

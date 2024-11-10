@@ -7,7 +7,7 @@ Grupo::Grupo(int numGroup, /*int cantidadEst,*/ int cupoMaximo/*, Horario* calen
 	this->cupoMaximo = cupoMaximo; 
 	this->horario = new Horario();
 	this->listaStudents = new Lista_Estudiante(); 
-	this->profesor = nullptr;
+	this->profesor = new Profesor();
 	//inicializar_lista();
 }
 Grupo::~Grupo() {
@@ -23,7 +23,7 @@ void Grupo::set_numGrupo(int numGrupo) { this->num_grupo = numGrupo; }
 void Grupo::set_cantidadEstudiantes(int numEstudiantes) { this->cantidad_estudiantes = numEstudiantes; }
 void Grupo::set_CupoMaximos(int cupos) { this->cupoMaximo = cupos; }
 void Grupo::unirProfesorAGrupo(Profesor* profesor1) { 
-		this->profesor = profesor;
+		this->profesor = profesor1;
 }
 void Grupo::matricularEstudiante(Estudiante* estudiante) {
 	listaStudents->insertarInicio(estudiante);
@@ -63,6 +63,7 @@ string Grupo::toString() {
 	s << "Cantidad de matriculados en el grupo " << cantidad_estudiantes << endl;
 	s << "Horario del grupo : " << endl;
 	s << horario->toString() << endl;
+	s << "Profesor : " << profesor->get_nombre() << endl; 
 	return s.str();
 }
 Profesor* Grupo::getProfesor() { return this->profesor; }

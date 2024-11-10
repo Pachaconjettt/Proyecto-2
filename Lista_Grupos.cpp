@@ -89,3 +89,13 @@ Grupo* Lista_Grupos::getGrupoXNumero(int num){
 	}
 	return nullptr; 
 }
+Grupo* Lista_Grupos::getGrupoXProfesorID(string _id) {
+	Nodo_Grupos* aux = first;
+	while (aux != nullptr) {
+		if (aux->getGrupo()->getProfesor()->get_id() == _id) {
+			return aux->getGrupo();
+		}
+		aux = aux->getNext();
+	}
+	return nullptr; 
+}

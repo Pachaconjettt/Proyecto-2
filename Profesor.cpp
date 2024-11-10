@@ -3,6 +3,9 @@
 Profesor::Profesor(string nombre, string id, int telefono, int edad, string email, string grado_academico) : Persona(nombre, id, telefono, edad, email) {
 	this->grado_academico = grado_academico;
 }
+Profesor::Profesor() : Persona ("disponible","indef",-1,-1,"indef") {
+	this->grado_academico = "indef";
+}
 Profesor::~Profesor() {}
 
 void Profesor::set_gradoAcademico(string grado_academico) { this->grado_academico = grado_academico; }
