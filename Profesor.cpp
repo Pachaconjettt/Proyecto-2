@@ -21,7 +21,3 @@ string Profesor::toString() {
 	s << "Grado academico: " << grado_academico << endl;
 	return s.str();
 }
-//void Profesor::matricularProfeEnGrupo(Grupo* grupos) {
-//	listaGrupos->insertarInicio(grupos);
-// NO ERA COMO DECIA, grupos van en profesores
-//}

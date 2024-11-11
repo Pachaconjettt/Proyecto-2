@@ -12,7 +12,6 @@ protected:
 	int numTelefono;
 	int edad;
 	string email;
-	/*Horario* horario;*/
 public:
 	Persona();
 	Persona(string, string, int, int, string);
@@ -29,7 +28,6 @@ public:
 	int get_numTelefono();
 	int get_edad();
 	string get_email();
-	//Horario* get_horario();
 
 	string virtual toString() = 0;
 };

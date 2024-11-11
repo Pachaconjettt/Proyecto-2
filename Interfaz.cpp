@@ -226,7 +226,7 @@ void Interfaz::ingresar_curso() {
     cin >> estado;
     cout << endl;
     course = new Curso(nombre, id, horas, precio, estado);
-
+    system("cls");
     // Verificar si el periodo existe
     Periodo* selectedPeriodo = periodo->getPeriodoXNum(periodo1);
     if (selectedPeriodo != nullptr) {
@@ -277,7 +277,6 @@ void Interfaz::ingresar_grupo() {
             cout << "ID del curso no válido. Por favor, intente de nuevo." << endl;
         }
     }
-
     Curso* curso = selectedPeriodo->getCursos()->cursoXId(id_course);
 
     cout << "Ingrese el numero del grupo: ";

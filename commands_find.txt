@@ -1,0 +1,2 @@
+set output dump
+match callExpr(callee(functionDecl(hasName("clang-uml"))), hasArgument(0, cxxDefaultArgExpr()))

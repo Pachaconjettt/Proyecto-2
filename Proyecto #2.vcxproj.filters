@@ -129,10 +129,10 @@
       <Filter>Header Files\Listas</Filter>
     </ClInclude>
     <ClInclude Include="ConversionDatos.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Archivos</Filter>
     </ClInclude>
     <ClInclude Include="Archivos.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Archivos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

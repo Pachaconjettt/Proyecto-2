@@ -5,7 +5,7 @@
 #include "Lista_Grupos.h"
 #include  "Lista_Profesores.h"
 using namespace std;
-// NOTA : Lo subrayado es de chris
+
 class Curso {
 private:
 	string nombre;
@@ -19,7 +19,6 @@ private:
 public:
 	Curso();
 	Curso(string, string, int, int, bool);
-	//Curso(Curso*);
 	virtual ~Curso();
 
 	void set_nombre(string);
@@ -29,7 +28,6 @@ public:
 	void set_estado(bool);
 	void setProfeLista(Lista_Profesores*);
 	void setGrupoLista(Lista_Grupos*);
-	/*void setGrupo(Grupo*);*/
 
 	string get_nombre();
 	string get_id();
@@ -38,7 +36,6 @@ public:
 	bool get_estado();
 	Lista_Profesores* getProfeLista();
 	Lista_Grupos* getGrupoLista();
-	//Grupo* getGrupo();
 
 	string toString();
 };

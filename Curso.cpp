@@ -16,13 +16,7 @@ Curso::Curso(string nombre, string id, int horas, int precios, bool estado) {
     profes = new Lista_Profesores(); 
     grupos = new Lista_Grupos();
 }
-//Curso::Curso(Curso* curso) {
-//    nombre = curso->get_nombre();
-//    id = curso->get_id();
-//    horas = curso->get_horas();
-//    precio = curso->get_precio();
-//    estado = curso->get_estado();
-//}
+
 Curso::~Curso() {}
 
 void Curso::set_nombre(string nombre) { this->nombre = nombre; }

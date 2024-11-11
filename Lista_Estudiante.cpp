@@ -109,14 +109,11 @@ void Lista_Estudiante::quitarEstudiantePorID(string id) {
     while (actual != nullptr) {
         if (actual->getTheStudent()->get_id() == id) {
             if (anterior == nullptr) {
-                // El nodo a quitar es el primero
                 first = actual->getNext();
             }
             else {
-                // El nodo a quitar está en el medio o al final
                 anterior->setNext(actual->getNext());
             }
-            // No eliminamos el objeto Estudiante, solo el nodo
             actual->setEstudiante(nullptr);
             delete actual;
             quantEstudiantes--;

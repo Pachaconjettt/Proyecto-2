@@ -124,7 +124,7 @@ int Lista_Cursos::PrecioTotal(string id) {
         while (nodoGrupo != nullptr) {
             if (nodoGrupo->getGrupo()->getEstudiante(id) != nullptr) {
                 precio += aux->getTheCurso()->get_precio();
-                break; // Salir del bucle de grupos si el estudiante está matriculado en este curso
+                break; 
             }
             nodoGrupo = nodoGrupo->getNext();
         }
