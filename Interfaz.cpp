@@ -1,9 +1,10 @@
 #include "Interfaz.h"
 
 Interfaz::Interfaz() {
-    this->periodo = new Lista_periodos(); 
-    this->profes = new Lista_Profesores(); 
-    this->estudiantes = new Lista_Estudiante();  
+    archivos = new Archivos(); 
+    this->periodo = archivos->recuperarPeriodos(); 
+    this->profes = archivos->recuperarProfesores();
+    this->estudiantes = archivos->recuperarEstudiante(); 
 }
 
 void Interfaz::menu_principal() {
@@ -306,7 +307,7 @@ void Interfaz::ingresar_grupo() {
     cin >> dia;
     cout << "Ingrese la hora (1-5, donde 1=8-10, 2=10-12, 3=12-14, 4=14-16, 5=16-18): ";
     cin >> horas;
-    cout << "Ingrese el curso: ";
+    cout << "Ingrese el nombre del curso: ";
     cin >> evento;
     grupooo->getHorario()->ingresar_evento(horas, dia, evento);
     cout << "Horario actual:" << endl;
@@ -443,7 +444,8 @@ void Interfaz::matricular_estudiante() {
             cout << "ID del curso no válido. Proceso cancelado." << endl;
             continue;
         }
-
+        cout << periodo->getPeriodoXNum(numPeriodo)->getCursos()->cursoXId(idCourse)->getGrupoLista()->toString();
+        cout << endl; 
         cout << "Ingrese el número del grupo: ";
         cin >> numGroup;
 
@@ -490,7 +492,7 @@ void Interfaz::mostrarFactura(const string & estudianteId, int numPeriodo) {
     double ivaMonto = subtotal * IVA;
 
     cout << "\t\t\t\t Factura de Matrícula \t\t\t\t" << endl;
-    cout << "Curso\t\tPrecio" << endl;
+    cout << "Curso\t\t" << endl;
     cout << cursos->ListaCursosEstudiante(estudianteId) << endl;
 
     cout << "Subtotal: " << subtotal << " colones" << endl;
@@ -549,7 +551,7 @@ void Interfaz::desmatricular_estudiante() {
     }
 
     // Eliminar al estudiante del grupo
-    grupoSeleccionado->getGrupoLista()->eliminarEstudiantePorID(id);
+    grupoSeleccionado->desmatricularEstudiante(estudiante); 
 
     cout << "Estudiante desmatriculado exitosamente." << endl;
 }
@@ -565,6 +567,7 @@ void Interfaz::submenu_busquedaInformes() {
         cout << "(3) Informe de cursos registrados por un estudiante" << endl;
         cout << "(4) Informe de profesor especifico" << endl;
         cout << "(5) Informe de periodos habilitados para el annio" << endl;
+        cout << "(6) Informe Grupo especifico " << endl; 
         cout << "(0) Regresar al menu principal" << endl << endl;
         cout << "------------------------------------------------------------" << endl;
         cout << "Digite una opcion del submenu: ";
@@ -606,6 +609,13 @@ void Interfaz::submenu_busquedaInformes() {
             cin.get();
             break;
         }
+        case 6: {
+            system("cls");
+            informe_GrupoEspecifico();
+            cin.ignore();
+            cin.get();
+            break;
+        }
         case 0: {
             break;
         }
@@ -621,6 +631,7 @@ void Interfaz::submenu_busquedaInformes() {
     }
     system("cls");
 }
+
 void Interfaz::informe_ProfesoresRegistrados() {
     cout << "\t\t\t Informe Profesores Registrados \t\t\t" << endl;
     cout << profes->toString() << endl;
@@ -638,18 +649,25 @@ void Interfaz::informe_CursosMatriculados_PorEstudiante() {
     cin >> id;
     cout << "Ingrese el periodo : " << endl;
     cin >> period;
+    system("cls");
+    cout << "Cursos matriculados por el estudiante : " << endl; 
     cout << periodo->getPeriodoXNum(period)->getCursos()->ListaCursosEstudiante(id) << endl;
 }
 void Interfaz::informe_ProfesorEspecifico() {
     string id; 
     int period; 
     cout << "\t\t\t Informe Profesores especificos cursos \t\t\t" << endl;
-    cout << periodo->toStringPeriodos() << endl; 
-    cout << "Ingrese el periodo deseado para ver " << endl;
+    cout << "Periodo 1: Enero a Marzo " << endl;
+    cout << "Periodo 2: Abril a Junio " << endl;
+    cout << "Periodo 3: Julio a Septiembre " << endl;
+    cout << "Periodo 4: Octubre a Diciembre " << endl;
+    cout << "Ingrese el número del periodo: ";
     cin >> period; 
     cout << profes->toString() << endl; 
     cout << "Ingrese el id del profesor que desea ver los cursos " << endl; 
     cin >> id; 
+    system("cls");
+    cout << "Cursos y grupos que imparte el profesor : " << endl; 
     cout << periodo->getPeriodoXNum(period)->getCursos()->ListaCursosProfesor(id) << endl; 
 }
 
@@ -661,7 +679,11 @@ void Interfaz::informe_PeriodosHabilitados_ParaAnio() {
 void Interfaz::informe_GrupoEspecifico() {
     int numPeriodo;
     string idCourse;
-    cout << periodo->toStringPeriodos() << endl;
+    cout << "Periodo 1: Enero a Marzo " << endl;
+    cout << "Periodo 2: Abril a Junio " << endl;
+    cout << "Periodo 3: Julio a Septiembre " << endl;
+    cout << "Periodo 4: Octubre a Diciembre " << endl;
+
     cout << "Ingrese el número del periodo: ";
     cin >> numPeriodo;
 
@@ -691,8 +713,22 @@ void Interfaz::informe_GrupoEspecifico() {
         cout << "Número de grupo no válido. Proceso cancelado." << endl;
         return;
     }
-
+    system("cls");
     cout << grupoSeleccionado->toString() << endl;
 }
 
-void Interfaz::guardar_datos() { cout << "Has guardado los datos" << endl; }
+void Interfaz::guardar_datos() { 
+    int i;
+    string id; 
+    archivos->guardarEstudiantes(estudiantes); 
+    archivos->guardarProfesores(profes);
+    cout << "Elige un num de periodo para guardar los cursos" << endl; 
+    cin >> i; 
+    archivos->guardarPeriodos(periodo); 
+    archivos->guardarCursos(periodo->getPeriodoXNum(i)->getCursos());
+    cout << periodo->toStringPeriodos() << endl;
+    cout << "Elige el id del curso para guardar los grupos "<< endl;
+    cin >> id; 
+    archivos->guardarGrupos(periodo->getPeriodoXNum(i)->getCursos()->cursoXId(id)->getGrupoLista());
+    cout << "Has guardado los datos" << endl; 
+}

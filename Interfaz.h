@@ -4,15 +4,18 @@
 #include "Lista_Estudiante.h"
 #include "Lista_Profesores.h"
 #include "Lista_periodos.h"
+#include "Archivos.h"
 //#include "Profesor.h"
 //#include "Estudiante.h"
 using namespace std;
 
 class Interfaz {
 private:
+	Archivos* archivos; 
 	Lista_periodos* periodo; 
 	Lista_Estudiante* estudiantes; // Lo más importanteee
-	Lista_Profesores* profes; 
+	Lista_Profesores* profes;
+
 public:
 	Interfaz();
 

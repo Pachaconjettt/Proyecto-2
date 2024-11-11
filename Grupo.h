@@ -36,6 +36,7 @@ public:
 	void set_numGrupo(int);
 	void set_cantidadEstudiantes(int);
 	void set_CupoMaximos(int);
+	void setListaEstudiantes(Lista_Estudiante*);
 	void matricularEstudiante(Estudiante*);
 	void unirProfesorAGrupo(Profesor*); 
 	int get_numGrupo();
@@ -48,6 +49,7 @@ public:
 	
 	Estudiante* getEstudiante(string id); 
 	bool estudianteYaMatriculado(Estudiante* estudiante);
+	void desmatricularEstudiante(Estudiante* estudiante); 
 	//void asingar_profesor(Profesor*);
 	//bool eliminar_profesor();
 	//bool agregar_estudiante(Estudiante*);

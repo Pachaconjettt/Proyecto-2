@@ -1,4 +1,4 @@
-#include "Grupo.h"
+	#include "Grupo.h"
 
 Grupo::Grupo(int numGroup, /*int cantidadEst,*/ int cupoMaximo/*, Horario* calendar, Lista_Estudiante* list*/) {
 	/*this->curso = new Curso(curso);*/
@@ -22,6 +22,7 @@ Grupo::~Grupo() {
 void Grupo::set_numGrupo(int numGrupo) { this->num_grupo = numGrupo; }
 void Grupo::set_cantidadEstudiantes(int numEstudiantes) { this->cantidad_estudiantes = numEstudiantes; }
 void Grupo::set_CupoMaximos(int cupos) { this->cupoMaximo = cupos; }
+void Grupo::setListaEstudiantes(Lista_Estudiante* lista) { this->listaStudents = lista;  }
 void Grupo::unirProfesorAGrupo(Profesor* profesor1) { 
 		this->profesor = profesor1;
 }
@@ -68,6 +69,10 @@ string Grupo::toString() {
 }
 Profesor* Grupo::getProfesor() { return this->profesor; }
 Horario* Grupo::getHorario() { return this->horario;  }
+void Grupo::desmatricularEstudiante(Estudiante* estudiante) {
+	listaStudents->quitarEstudiantePorID(estudiante->get_id());
+	cantidad_estudiantes--;
+}
 //bool Grupo::buscar_estudiante(string id) {
 //	for (int i = 0; i < cantidad_estudiantes; i++) {
 //		if (estudiantes_matriculados[i]->get_id() == id) {

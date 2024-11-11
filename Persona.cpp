@@ -6,7 +6,7 @@ Persona::Persona() {
 	numTelefono = 0;
 	edad = 0;
 	email = " ";
-	horario = new Horario();
+	/*horario = new Horario();*/
 }
 Persona::Persona(string nombre, string id, int numTelefono, int edad, string email) {
 	this->nombre = nombre;
@@ -14,7 +14,7 @@ Persona::Persona(string nombre, string id, int numTelefono, int edad, string ema
 	this->numTelefono = numTelefono;
 	this->edad = edad;
 	this->email = email;
-	horario = new Horario();
+	/*horario = new Horario();*/
 }
 Persona::~Persona() {}
 
@@ -29,4 +29,4 @@ string Persona::get_id() { return id; }
 int Persona::get_numTelefono() { return numTelefono; }
 int Persona::get_edad() { return edad; }
 string Persona::get_email() { return email; }
-Horario* Persona::get_horario() { return horario; }
+//Horario* Persona::get_horario() { return horario; }

@@ -1,4 +1,4 @@
-#include "Estudiante.h"
+	#include "Estudiante.h"
 
 Estudiante::Estudiante(string nombre, string id, int telefono, int edad, string email, string especialidad) : Persona(nombre, id, telefono, edad, email) {
 	this->especialidad = especialidad;

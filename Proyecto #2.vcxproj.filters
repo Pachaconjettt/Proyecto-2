@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Clases">
       <UniqueIdentifier>{7aa0ab33-0004-4cd7-9db4-74947aa280f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Archivos">
+      <UniqueIdentifier>{2c66e4d6-d85a-494d-9c6c-207f592ba0d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Archivos">
+      <UniqueIdentifier>{0b5ba99a-93ba-438c-a7c9-26a1d28c4fb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lista_Estudiante.cpp">
@@ -75,6 +81,12 @@
     <ClCompile Include="Lista_periodos.cpp">
       <Filter>Source Files\Listas</Filter>
     </ClCompile>
+    <ClCompile Include="ConversionDatos.cpp">
+      <Filter>Source Files\Archivos</Filter>
+    </ClCompile>
+    <ClCompile Include="Archivos.cpp">
+      <Filter>Source Files\Archivos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lista_Estudiante.h">
@@ -115,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="Lista_periodos.h">
       <Filter>Header Files\Listas</Filter>
+    </ClInclude>
+    <ClInclude Include="ConversionDatos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Archivos.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
