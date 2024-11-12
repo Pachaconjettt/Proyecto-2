@@ -23,7 +23,7 @@ void Archivos::guardarEstudiantes(Lista_Estudiante* _lis) {
 
 //2)  guardo EstudiantesGrupos
 void Archivos::guardarEstudiantesGrupo(Lista_Estudiante* lis_, int numeroGrupo) {
-    if (salidaAux.good()) {
+    if (salida.good()) {
         Nodo_Estudiante* aux = lis_->getFirst();
         while (aux) {
             salidaAux << numeroGrupo << "\t";
@@ -57,11 +57,11 @@ void Archivos::guardarProfesores(Lista_Profesores* _lis) {
 }
 
 //4) Guardo Profesores grupos
-void Archivos::guardarProfesoresGrupo(Lista_Profesores* lis_, int numGrupo) {
+void Archivos::guardarProfesoresGrupo(Lista_Profesores* lis_, string idCurso) {
     if (salida.good()) {
         Nodo_Profesor* aux = lis_->getPrimero();
         while (aux) {
-            salidaAux << numGrupo << "\t";
+            salidaAux << idCurso << "\t";
             salidaAux << aux->getProfesor()->get_nombre() << "\t";
             salidaAux << aux->getProfesor()->get_id() << "\t";
             salidaAux << aux->getProfesor()->get_numTelefono() << "\t";
@@ -81,7 +81,8 @@ void Archivos::guardarGrupos(Lista_Grupos* _lis) {
         Nodo_Grupos* aux = _lis->getPrimero();
         while (aux) {
             salida << aux->getGrupo()->get_numGrupo() << "\t";
-            salida << aux->getGrupo()->get_cuposMaximos() << "\n";
+            salida << aux->getGrupo()->get_cuposMaximos() << "\t";
+            salida << aux->getGrupo()->get_cantidadEstudiantes() << "\n"; 
             guardarEstudiantesGrupo(aux->getGrupo()->getGrupoLista(), aux->getGrupo()->get_numGrupo());
             aux = aux->getNext();
         }
@@ -91,13 +92,14 @@ void Archivos::guardarGrupos(Lista_Grupos* _lis) {
 }
 
 //6) Guardo Grupos de grupos jajajaajaj
-void Archivos::guardarGruposNum(Lista_Grupos* lis_, int num) {
+void Archivos::guardarGruposNum(Lista_Grupos* lis_, string id) {
     if (salida.good()) {
         Nodo_Grupos* aux = lis_->getPrimero();
         while (aux) {
-            salidaAux << num << "\t";
+            salidaAux << id << "\t";
             salidaAux << aux->getGrupo()->get_numGrupo() << "\t";
             salidaAux << aux->getGrupo()->get_cuposMaximos() << "\n";
+            guardarEstudiantesGrupo(aux->getGrupo()->getGrupoLista(), aux->getGrupo()->get_numGrupo());
             aux = aux->getNext();
         }
     }
@@ -108,42 +110,17 @@ void Archivos::guardarCursos(Lista_Cursos* _lis) {
     salida.open("Archivos/Cursos.txt");
     salidaAux.open("Archivos/gruposDeGrupos.txt");
     salidaAux2.open("Archivos/ProfesoresLista.txt");
-    if (salida.good() && salidaAux.good() && salidaAux2.good()) {
+    if (salidaAux.good() && salidaAux2.good()) {
         Nodo_Cursos* aux = _lis->getPrimero();
+        Curso* curso = aux->getTheCurso();
         while (aux) {
-            Curso* curso = aux->getTheCurso();
             salida << curso->get_nombre() << "\t";
             salida << curso->get_id() << "\t";
             salida << curso->get_horas() << "\t";
             salida << curso->get_precio() << "\t";
-            salida << curso->get_estado() << "\n";
-
-            // Guardar grupos del curso
-            Lista_Grupos* grupos = curso->getGrupoLista();
-            Nodo_Grupos* nodoGrupo = grupos->getPrimero();
-            while (nodoGrupo) {
-                Grupo* grupo = nodoGrupo->getGrupo();
-                salidaAux << curso->get_id() << "\t";
-                salidaAux << grupo->get_numGrupo() << "\t";
-                salidaAux << grupo->get_cuposMaximos() << "\n";
-                nodoGrupo = nodoGrupo->getNext();
-            }
-
-            // Guardar profesores del curso
-            Lista_Profesores* profesores = curso->getProfeLista();
-            Nodo_Profesor* nodoProfesor = profesores->getPrimero();
-            while (nodoProfesor) {
-                Profesor* profesor = nodoProfesor->getProfesor();
-                salidaAux2 << curso->get_id() << "\t";
-                salidaAux2 << profesor->get_nombre() << "\t";
-                salidaAux2 << profesor->get_id() << "\t";
-                salidaAux2 << profesor->get_numTelefono() << "\t";
-                salidaAux2 << profesor->get_edad() << "\t";
-                salidaAux2 << profesor->get_email() << "\t";
-                salidaAux2 << profesor->get_gradoAcademico() << "\n";
-                nodoProfesor = nodoProfesor->getNext();
-            }
-
+            salida << curso->get_estado() << "\n";  
+            guardarGruposNum(aux->getTheCurso()->getGrupoLista(), aux->getTheCurso()->get_id());
+            guardarProfesoresGrupo(aux->getTheCurso()->getProfeLista(), aux->getTheCurso()->get_id());
             aux = aux->getNext();
         }
     }
@@ -155,15 +132,18 @@ void Archivos::guardarCursos(Lista_Cursos* _lis) {
     salidaAux2.close();
 }
 //8) Guardar Cursos de Cursos
-void Archivos::guardarCursosGrupos(Lista_Cursos* _lis){
+void Archivos::guardarCursosGrupos(Lista_Cursos* _lis, int num){
     if (salida.good()) {
         Nodo_Cursos* aux = _lis->getPrimero(); 
         while (aux) {
-            salidaAux << aux->getTheCurso()->get_nombre() << '\t';
-            salidaAux << aux->getTheCurso()->get_id() << '\t';
-            salidaAux << aux->getTheCurso()->get_horas() << '\t';
-            salidaAux << aux->getTheCurso()->get_precio() << '\t';
-            salidaAux << aux->getTheCurso()->get_estado() << '\n';
+            salidaAux << num << '\t'; 
+            salidaAux << aux->getTheCurso()->get_nombre() << "\t";
+            salidaAux << aux->getTheCurso()->get_id() << "\t";
+            salidaAux << aux->getTheCurso()->get_horas() << "\t";
+            salidaAux << aux->getTheCurso()->get_precio() << "\t";
+            salidaAux << aux->getTheCurso()->get_estado() << "\n";
+            guardarGruposNum(aux->getTheCurso()->getGrupoLista(), aux->getTheCurso()->get_id());
+            guardarProfesoresGrupo(aux->getTheCurso()->getProfeLista(), aux->getTheCurso()->get_id());
             aux = aux->getNext(); 
         }
     }
@@ -171,42 +151,18 @@ void Archivos::guardarCursosGrupos(Lista_Cursos* _lis){
 //9) Guardo Periodos
 void Archivos::guardarPeriodos(Lista_periodos* _lis) {
     salida.open("Archivos/Periodos.txt");
-    salidaAux.open("Archivos/CursosGrupos.txt");
+    salidaAux.open("Archivos/CursoGrupos.txt");
     if (salida.good()) {
         Nodo_Periodo* aux = _lis->getPrimero();
         while (aux) {
-            salida << aux->getPeriodo()->getPeriodo() << '\n';
-            aux = aux->getNext();
+            salida << aux->toString() << "\n";
+            guardarCursosGrupos(aux->getPeriodo()->getCursos(), aux->getPeriodo()->getPeriodo());
+            aux = aux->getNext();   
         }
     }
     salida.close();
     salidaAux.close();
 }
-
-//8) Guardo Cursos con Grupos
-//void Archivos::guardarCursosGrupos(Lista_Cursos* _lis) {
-//    salida.open("Archivos/CursosGrupos.txt");
-//    if (salida.good()) {
-//        Nodo_Cursos* aux = _lis->getPrimero();
-//        while (aux) {
-//            Curso* curso = aux->getTheCurso();
-//            Lista_Grupos* grupos = curso->getGrupoLista();
-//            Nodo_Grupos* nodoGrupo = grupos->getPrimero();
-//            while (nodoGrupo) {
-//                Grupo* grupo = nodoGrupo->getGrupo();
-//                salida << curso->get_id() << "\t";
-//                salida << grupo->get_numGrupo() << "\t";
-//                salida << grupo->get_cuposMaximos() << "\n";
-//                nodoGrupo = nodoGrupo->getNext();
-//            }
-//            aux = aux->getNext();
-//        }
-//    }
-//    else {
-//        std::cerr << "Error al abrir el archivo para guardar los cursos con grupos." << std::endl;
-//    }
-//    salida.close();
-//}
 
 //1.1) Recupero Estudiante
 Lista_Estudiante* Archivos::recuperarEstudiante() {
@@ -253,7 +209,7 @@ Lista_Estudiante* Archivos::recuperarEstudiantesGrupos(int numeroGrupo_) {
             listaAux->insertarInicio(eldep);
     }
     entradaAux.close();
-    return listaAux;
+    return listaAux;    
 }
 //1.3) Recupero Profesores
 Lista_Profesores* Archivos::recuperarProfesores() {
@@ -280,15 +236,15 @@ Lista_Profesores* Archivos::recuperarProfesores() {
 }
 //1.4) Recupero Profesores Grupos
 
-Lista_Profesores* Archivos::recuperarProfesoresGrupos(int num) {
+Lista_Profesores* Archivos::recuperarProfesoresGrupos(string num) {
 
     Lista_Profesores* listaAux = new Lista_Profesores();
     entradaAux.open("Archivos/ProfesoresLista.txt");
     string cedula, nombre, telefono, edad, email, gradoAcademico;
-    string grupoNum;
+    string id;
     Profesor* eldep = nullptr;
     while (entradaAux.good()) {
-        getline(entradaAux, grupoNum, '\t');
+        getline(entradaAux, id, '\t');
         getline(entradaAux, nombre, '\t');
         getline(entradaAux, cedula, '\t');
         getline(entradaAux, telefono, '\t');
@@ -298,7 +254,7 @@ Lista_Profesores* Archivos::recuperarProfesoresGrupos(int num) {
         if (!nombre.empty() && !cedula.empty() && !telefono.empty() && !edad.empty() && !email.empty() && !gradoAcademico.empty()) {
             eldep = new Profesor(nombre, nombre, convDatos.conversionInt(telefono), convDatos.conversionInt(edad), email, gradoAcademico);
         }
-        if (entrada.good() && eldep && (num == convDatos.conversionInt(grupoNum)))
+        if (entrada.good() && eldep && (num == id))
             listaAux->InsertarInicio(eldep);
     }
     entradaAux.close();
@@ -314,9 +270,10 @@ Lista_Grupos* Archivos::recuperarGrupos() {
     entrada.open("Archivos/grupos.txt");
     while (entrada.good()) {
         getline(entrada, numeroCurso, '\t');
-        getline(entrada, cupoMaximo, '\n');
+        getline(entrada, cupoMaximo, '\t');
+        getline(entrada, cuposUsados, '\n'); 
         estudiantes = recuperarEstudiantesGrupos(convDatos.conversionInt(numeroCurso));
-        if (!numeroCurso.empty() && !cupoMaximo.empty()) {
+        if (!numeroCurso.empty() && !cupoMaximo.empty() && !cuposUsados.empty()) {
             grupoAux = new Grupo(convDatos.conversionInt(numeroCurso), convDatos.conversionInt(cupoMaximo));
             grupoAux->set_numGrupo(convDatos.conversionInt(numeroCurso));
             grupoAux->set_cantidadEstudiantes(convDatos.conversionInt(cuposUsados));
@@ -330,159 +287,110 @@ Lista_Grupos* Archivos::recuperarGrupos() {
     return listaAux;
 }
 //1.6) Recuperar Grupos de grupo
-Lista_Grupos* Archivos::recuperarGruposGrupos(int num) {
+Lista_Grupos* Archivos::recuperarGruposGrupos(string id) {
     Lista_Grupos* listagroups = new Lista_Grupos();
-    string grupoNum, numeroCurso, cupoMaximo;
+    string numeroCurso, cupoMaximo, cuposUsados;
+    string grupoNum;
+    Lista_Estudiante* estudiantes; 
     Grupo* grupoAux = nullptr;
     entradaAux.open("Archivos/gruposDeGrupos.txt");
 
-    if (entradaAux.is_open()) {
         while (entradaAux.good()) {
-            getline(entradaAux, grupoNum, '\t');
+            getline(entradaAux, id, '\t');
             getline(entradaAux, numeroCurso, '\t');
-            getline(entradaAux, cupoMaximo, '\n');
-
-            if (!grupoNum.empty() && !numeroCurso.empty() && !cupoMaximo.empty() && num == convDatos.conversionInt(grupoNum)) {
+            getline(entradaAux, cupoMaximo, '\t');
+            getline(entradaAux, cuposUsados, '\n');
+            estudiantes = recuperarEstudiantesGrupos(convDatos.conversionInt(numeroCurso));
+            if (!numeroCurso.empty() && !cupoMaximo.empty()) {
                 grupoAux = new Grupo(convDatos.conversionInt(numeroCurso), convDatos.conversionInt(cupoMaximo));
+                grupoAux->set_numGrupo(convDatos.conversionInt(numeroCurso));
+                grupoAux->set_cantidadEstudiantes(convDatos.conversionInt(cuposUsados));
+                grupoAux->setListaEstudiantes(estudiantes);
+            }
+            if (entrada.good() && grupoAux && (id == grupoNum))
                 listagroups->insertarInicio(grupoAux);
             }
-        }
         entradaAux.close();
-    }
-    else {
-        std::cerr << "Error al abrir el archivo para recuperar los grupos." << std::endl;
-    }
-
-    return listagroups;
+        return listagroups;
 }
 
 //1.7) Recuperar Cursos
 Lista_Cursos* Archivos::recuperarCursos() {
-    Lista_Cursos* listaCursos = new Lista_Cursos();
+    Lista_Cursos* listaAux =  new Lista_Cursos();
+    string nombre, id, horas, precio, estado;
+    Lista_Grupos* grupos; 
+    Lista_Profesores* profes; 
+    Curso* cursoAux = nullptr; 
     entrada.open("Archivos/Cursos.txt");
-    if (entrada.good()) {
-        string nombre, id, horas, precio, estado;
         while (entrada.good()) {
             getline(entrada, nombre, '\t');
             getline(entrada, id, '\t');
             getline(entrada, horas, '\t');
             getline(entrada, precio, '\t');
             getline(entrada, estado, '\n');
+            grupos = recuperarGruposGrupos(id); 
+            profes = recuperarProfesoresGrupos(id); 
             if (!nombre.empty() && !id.empty() && !horas.empty() && !precio.empty() && !estado.empty()) {
-                Curso* curso = new Curso(nombre, id, convDatos.conversionInt(horas), convDatos.conversionDouble(precio), estado == "1");
-
-                // Recuperar grupos del curso
-                Lista_Grupos* listaGrupos = new Lista_Grupos();
-                entradaAux.open("Archivos/gruposDeGrupos.txt");
-                if (entradaAux.good()) {
-                    string numGrupo, cuposMaximos;
-                    while (entradaAux.good()) {
-                        getline(entradaAux, numGrupo, '\t');
-                        getline(entradaAux, cuposMaximos, '\n');
-                        if (!numGrupo.empty() && !cuposMaximos.empty()) {
-                            Grupo* grupo = new Grupo(convDatos.conversionInt(numGrupo), convDatos.conversionInt(cuposMaximos));
-                            listaGrupos->insertarInicio(grupo);
-                        }
-                    }
-                }
-                entradaAux.close();
-                curso->setGrupoLista(listaGrupos);
-
-                // Recuperar profesores del curso
-                Lista_Profesores* listaProfesores = new Lista_Profesores();
-                entradaAux2.open("Archivos/ProfesoresLista.txt");
-                if (entradaAux2.good()) {
-                    string nombreProfesor, idProfesor, telefonoProfesor, edadProfesor, emailProfesor, gradoAcademico;
-                    while (entradaAux2.good()) {
-                        getline(entradaAux2, nombreProfesor, '\t');
-                        getline(entradaAux2, idProfesor, '\t');
-                        getline(entradaAux2, telefonoProfesor, '\t');
-                        getline(entradaAux2, edadProfesor, '\t');
-                        getline(entradaAux2, emailProfesor, '\t');
-                        getline(entradaAux2, gradoAcademico, '\n');
-                        if (!nombreProfesor.empty() && !idProfesor.empty() && !telefonoProfesor.empty() && !edadProfesor.empty() && !emailProfesor.empty() && !gradoAcademico.empty()) {
-                            Profesor* profesor = new Profesor(nombreProfesor, idProfesor, convDatos.conversionInt(telefonoProfesor), convDatos.conversionInt(edadProfesor), emailProfesor, gradoAcademico);
-                            listaProfesores->InsertarInicio(profesor);
-                        }
-                    }
-                }
-                entradaAux2.close();
-                curso->setProfeLista(listaProfesores);
-
-                listaCursos->insertarInicio(curso);
+                cursoAux = new Curso(nombre, id, convDatos.conversionInt(horas), convDatos.conversionDouble(precio), convDatos.conversionBool(estado));
+                cursoAux->set_id(id);
+                cursoAux->setGrupoLista(grupos);
+                cursoAux->setProfeLista(profes); 
+            }
+            if (entrada.good() && cursoAux) {
+                listaAux->insertarInicio(cursoAux); 
             }
         }
-    }
-    entrada.close();
-    return listaCursos;
-}
+        entrada.close();
+        return listaAux;
+    }       
 ////1.7) Recuperar cursosGrupos; 
-Lista_Cursos* Archivos::recuperarCursosGrupos() {
-    Lista_Cursos* listaCursos = new Lista_Cursos();
-    string cursoId, nombreCurso, horas, precio, estado;
+Lista_Cursos* Archivos::recuperarCursosGrupos(int numero) {
+    Lista_Cursos* listaAux = new Lista_Cursos();
+    string nombre, id, horas, precio, estado, periodo;
+    Lista_Grupos* grupos;
+    Lista_Profesores* profes;
     Curso* cursoAux = nullptr;
-    entradaAux.open("Archivos/CursosGrupos.txt");
-
-    if (entradaAux.is_open()) {
-        while (entradaAux.good()) {
-            getline(entradaAux, cursoId, '\t');
-            getline(entradaAux, nombreCurso, '\t');
-            getline(entradaAux, horas, '\t');
-            getline(entradaAux, precio, '\t');
-            getline(entradaAux, estado, '\n');
-
-            if (!cursoId.empty() && !nombreCurso.empty() && !horas.empty() && !precio.empty() && !estado.empty()) {
-                cursoAux = new Curso(nombreCurso, cursoId, convDatos.conversionInt(horas), convDatos.conversionInt(precio), convDatos.conversionInt(estado));
-                listaCursos->insertarInicio(cursoAux);
-            }
+    entradaAux.open("Archivos/CursoGrupos.txt");
+    while (entradaAux.good()) {
+        getline(entradaAux, periodo, '\t');
+        getline(entradaAux, nombre, '\t');
+        getline(entradaAux, id, '\t');
+        getline(entradaAux, horas, '\t');
+        getline(entradaAux, precio, '\t');
+        getline(entradaAux, estado, '\n');
+        grupos = recuperarGruposGrupos(id);
+        profes = recuperarProfesoresGrupos(id);
+        if (!nombre.empty() && !id.empty() && !horas.empty() && !precio.empty() && !estado.empty()) {
+            cursoAux = new Curso(nombre, id, convDatos.conversionInt(horas), convDatos.conversionDouble(precio), convDatos.conversionBool(estado));
+            cursoAux->set_id(id);
+            cursoAux->setGrupoLista(grupos);
+            cursoAux->setProfeLista(profes);
         }
-        entradaAux.close();
+        if (entrada.good() && cursoAux && (numero == convDatos.conversionInt(periodo)))
+            listaAux->insertarInicio(cursoAux);
     }
-    else {
-        std::cerr << "Error al abrir el archivo para recuperar los cursos." << std::endl;
-    }
-
-    return listaCursos;
+    entradaAux.close();
+    return listaAux;
 }
-
 //1.8) Recuperar periodos
 Lista_periodos* Archivos::recuperarPeriodos() {
     Lista_periodos* listaAux = new Lista_periodos();
+    string nperiodos; 
+    Lista_Cursos* curso; 
+    Periodo* periodoAux = nullptr; 
     entrada.open("Archivos/Periodos.txt");
-    if (entrada.good()) {
-        string periodo;
-        while (getline(entrada, periodo)) {
-            if (!periodo.empty()) {
-                Periodo* nuevoPeriodo = new Periodo();
-                nuevoPeriodo->setPeriodo(convDatos.conversionInt(periodo));
-
-                // Recuperar cursos del periodo
-                Lista_Cursos* listaCursos = new Lista_Cursos();
-                entradaAux.open("Archivos/Cursos.txt");
-                if (entradaAux.good()) {
-                    string nombre, id, horas, precio, estado;
-                    while (entradaAux.good()) {
-                        getline(entradaAux, nombre, '\t');
-                        getline(entradaAux, id, '\t');
-                        getline(entradaAux, horas, '\t');
-                        getline(entradaAux, precio, '\t');
-                        getline(entradaAux, estado, '\n');
-                        if (!nombre.empty() && !id.empty() && !horas.empty() && !precio.empty() && !estado.empty()) {
-                            Curso* curso = new Curso(nombre, id, convDatos.conversionInt(horas), convDatos.conversionDouble(precio), estado == "1");
-                            listaCursos->insertarInicio(curso);
-                        }
-                    }
-                }
-                entradaAux.close();
-                nuevoPeriodo->setLista_Cursos(listaCursos);
-
-                listaAux->ingresarPrimero(nuevoPeriodo);
-            }
+    while (entrada.good()) {
+        getline(entrada, nperiodos, '\n');
+        curso = recuperarCursosGrupos(convDatos.conversionInt(nperiodos));
+        if (!nperiodos.empty()) {
+            periodoAux = new Periodo(convDatos.conversionInt(nperiodos)); 
+            periodoAux->setPeriodo(convDatos.conversionInt(nperiodos));
+            periodoAux->setLista_Cursos(curso);
+        }
+        if (entrada.good() && periodoAux) {
+            listaAux->ingresarPrimero(periodoAux);
         }
     }
-    else {
-        std::cerr << "Error al abrir el archivo Periodos.txt para recuperar los periodos." << std::endl;
-    }
-    entrada.close();
-    return listaAux;
+    entrada.close(); 
+    return listaAux; 
 }

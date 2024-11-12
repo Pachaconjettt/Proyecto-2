@@ -10,5 +10,6 @@ public:
 	char conversionChar(string);
 	double conversionDouble(string);
 	int conversionInt(string);
+	bool conversionBool(string); 
 };
 

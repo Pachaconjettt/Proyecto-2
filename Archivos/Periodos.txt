@@ -1,0 +1,15 @@
+Periodo : 2
+Cursos 
+
+
+Periodo : 1
+Cursos 
+---------------------------1----------------------------
+Nombre del curso: Programacion
+ID del curso: 10394
+Horas del curso: 30
+Precios del curso: 40000
+Estado del curso: Disponible
+
+
+

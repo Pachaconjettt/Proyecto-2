@@ -17,3 +17,9 @@ int ConversionDatos::conversionInt(string s) {
 	r >> v;
 	return v;
 }
+bool ConversionDatos::conversionBool(string s) {
+	stringstream r(s);
+	bool v; 
+	r >> v;
+	return v; 
+}
